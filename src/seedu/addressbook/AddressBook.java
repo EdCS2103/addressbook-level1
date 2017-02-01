@@ -490,12 +490,17 @@ public class AddressBook {
         final ArrayList<String[]> matchedPersons = new ArrayList<>();
         for (String[] person : getAllPersonsInAddressBook()) {
             final Set<String> wordsInName = new HashSet<>(splitByWhitespace(getNameFromPerson(person)));
-            if (!Collections.disjoint(wordsInName, keywords)) {
-                matchedPersons.add(person);
-            }
+            addMatchedPerson(keywords, matchedPersons, person, wordsInName);
         }
         return matchedPersons;
     }
+
+	private static void addMatchedPerson(Collection<String> keywords, final ArrayList<String[]> matchedPersons,
+			String[] person, final Set<String> wordsInName) {
+		if (!Collections.disjoint(wordsInName, keywords)) {
+		    matchedPersons.add(person);
+		}
+	}
 
     /**
      * Deletes person identified using last displayed index.
